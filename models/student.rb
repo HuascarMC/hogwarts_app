@@ -17,6 +17,12 @@ class Student
     @id = SqlRunner.run(sql, values)[0]['id'].to_i
   end
 
+  def delete()
+    sql = "DELETE FROM students WHERE id = $1"
+    values = [@id]
+    SqlRunner.run(sql, values)
+  end
+
   def self.all()
     sql = "SELECT * FROM students"
     values = []
@@ -37,6 +43,7 @@ class Student
     sql = "SELECT * FROM houses WHERE id = $1"
     values = [@house_id]
     result = SqlRunner.run(sql, values)[0]
-    return result['name']
+    house = House.new(result)
+    return house.logo
   end
 end
